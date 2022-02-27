@@ -17,9 +17,9 @@
         </div>
       </div>
 
-      <div class="transaction" @click="switchSendRequest">
+      <div class="transaction inflow" part="native">
         <MySelf
-          :sendRequestDirection="sendRequestDirection"
+          :sendRequestDirection="'request'"
           :newDashBalance="newDashBalance"
         ></MySelf>
       </div>
@@ -47,26 +47,24 @@
 
         <ion-icon
           class="swap"
-          @click="swapCurrency"
+          @click="swapCurrency()"
           :src="require('/public/assets/icons/swap_currency.svg')"
         ></ion-icon>
       </div>
 
       <qrcode-vue
         :value="`${unusedAddress}?amount=${amount}`"
-        size="280"
+        size="260"
         level="H"
         class="center"
         @click="copyToClipboard()"
       />
       <div class="message-text">
-        My Dash Address
         <ion-textarea
-          :value="
-            amount == 0 ? unusedAddress : `${unusedAddress}?amount=${amount}`
-          "
+        :value="unusedAddress"
           readonly
         ></ion-textarea>
+        <!-- :value="amount == 0 ? unusedAddress : `${unusedAddress}?amount=${amount}`" -->
       </div>
     </ion-content>
   </ion-page>
@@ -132,7 +130,7 @@ export default defineComponent({
     const sendRequestDirection = ref("request");
 
     function copyToClipboard() {
-      navigator.clipboard.writeText("unusedAddress").then(
+      navigator.clipboard.writeText(unusedAddress.value.toString()).then(
         function () {
           store.dispatch("showToast", {
             text: "Copied address",
@@ -174,12 +172,13 @@ export default defineComponent({
       console.log("show currency", currency.value);
     };
 
+    const fiatValue = ref()
     watchEffect(() => {
       if (currency.value === "dash") {
-        return (fiatAmount.value = amount.value * fiatRate.value);
+        return (fiatAmount.value = parseFloat((amount.value * fiatRate.value).toFixed(2)));
       }
       if (currency.value === "fiat") {
-        return (amount.value = fiatAmount.value / fiatRate.value);
+        return (amount.value = parseFloat((fiatAmount.value / fiatRate.value).toFixed(6)));
       }
     });
 
@@ -228,14 +227,16 @@ export default defineComponent({
 <style scoped>
 .transaction {
   border-radius: 10px;
-  padding-left: 10px;
-  padding-top: 25px;
-  /* background: white; */
+  background: white;
 }
-.inflow {
+
+ion-item::part(native) {
   background: linear-gradient(266.73deg, #f2f8fd 0%, #ebfff8 98.09%);
-  margin: auto;
+  margin: 25px auto 0px;
+  border-radius: 10px;
+  width: 272px;
 }
+
 .title {
   position: fixed;
   left: 50%;
@@ -261,32 +262,12 @@ export default defineComponent({
   position: relative;
   margin-top: 36px;
 }
-.message-text {
-  margin: 340px 0px 8px 24px;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 18px;
-  color: #a3a3a3;
-}
-.message-input {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  min-height: 44px;
-
-  background: #f5f5f7;
-
-  border: 0.5px solid rgba(0, 0, 0, 0.12);
-  /* box-sizing: border-box; */
-  border-radius: 10px;
-}
 .swap {
   width: 35px;
   height: 35px;
   position: absolute;
   top: 50%;
-  right: 35px;
+  right: 20px;
   transform: translate(0%, -50%);
 }
 .new-balance {
@@ -304,8 +285,14 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, 10%);
 }
-ion-textarea {
+.message-text {
+  margin: 300px 0px 8px 0px;
   padding: 0;
-  width: 272px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #a3a3a3;
+  text-align: center;
 }
 </style>

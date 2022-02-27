@@ -4,11 +4,7 @@
     v-if="transaction.type === 'received'"
     class="flex ion-no-wrap received_txn"
   >
-    You received
-    <div class="dash">
-      {{ receivedDash }}
-    </div>
-    on
+    Received to 
     <div class="address">
       {{ truncatedAddress(transaction.to[0].address) }}
     </div>
@@ -19,11 +15,7 @@
     v-if="transaction.type === 'sent' && transaction.to[0].address != 'false'"
     class="sent_txn flex ion-justify-content-end"
   >
-    You sent
-    <div class="dash">
-      {{ sentDash }}
-    </div>
-    to
+    Sent to
     <div class="address">
       {{ truncatedAddress(transaction.to[0].address) }}
     </div>

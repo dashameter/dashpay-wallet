@@ -8,6 +8,18 @@ ion-header {
   border: none;
 }
 
+.center {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+.copyicon {
+  color: #6c69fc;
+  margin-left: 8px;
+  margin-top: 8px;
+}
+
 /* removes the shadow below the header */
 .header-md::after {
   height: 0px;
@@ -74,43 +86,44 @@ ion-header {
 
 /* SendRequestDashModal styles */
 .enter-dash {
-  width: 132px;
-  text-align: end;
   height: 34px;
-  /* font-family: Inter; */
   font-style: normal;
   --placeholder-font-weight: 600;
   font-size: 28px;
   line-height: 34px;
   --placeholder-color: #000000;
   flex: none;
-  /* margin-top: 34px; */
   margin-bottom: 5px;
-  margin-right: 6px;
-  text-align: end;
+  border: none;
 }
+.dash-width {
+  width: 250px;
+  text-align: start;
+}
+.fiat-width {
+  width: 150px;
+  text-align: start;
+}
+
 .dash-label {
-  height: 37px;
-  width: 170px;
-  /* font-family: Inter; */
+  position: absolute;
+  display: flex;
   font-style: normal;
-  /* --placeholder-font-weight: 600; */
   font-size: 28px;
   line-height: 34px;
-  --placeholder-color: #000000;
-  /* order: 1; */
-  /* margin-top: 34px; */
+  /* --placeholder-color: #000000; */
   margin-bottom: 5px;
-  display: flex;
-  align-items: flex-start;
+  margin-left: 100px;
+  order: 1;
+  justify-content: center;
+  text-align: end;
 }
 .wrapper {
   display: flex;
   justify-content: center;
 }
 .enter-fiat {
-  /* font-family: Inter; */
-  width: 132px;
+  width: 170px;
   margin: 0px 0px 0px auto;
   height: 18px;
   font-style: normal;
@@ -122,7 +135,6 @@ ion-header {
 
   flex: none;
   text-align: end;
-  margin-right: 6px;
 }
 .fiat-label {
   width: 170px;
@@ -134,10 +146,9 @@ ion-header {
   color: #a3a3a3;
   display: flex;
   align-items: flex-start;
+  text-align: end;
   order: 1;
   margin-bottom: 10px;
-  /* margin-right: 35%; */
-  /* text-align: flex-start; */
 }
 .convert {
   height: 18px;
@@ -166,19 +177,32 @@ ion-header {
   );
 }
 
+.funds {
+  /* width: 210px; */
+  height: 15px;
+  margin: 10px auto 0px auto;
+  display: flex;
+  justify-content: center;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+
+  color: #ff627e;
+}
+
 .headername {
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
   color: #000000;
-  /* padding-left: 15px; */
 }
 .centerheader {
   position: fixed;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* margin-top: 14px; */
   display: flex;
   align-items: center;
 }
@@ -186,7 +210,6 @@ ion-header {
   width: 28px;
   height: 28px;
   color: #6c69fc;
-  /* margin-left: 6px; */
 }
 .unlock {
   font-style: normal;

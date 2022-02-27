@@ -226,6 +226,7 @@ export default {
         componentProps: {
           label: getUserLabel.value(friendOwnerId.value)?.toLowerCase(),
         },
+        cssClass: "qrcode", 
       });
       return modal.present();
     };

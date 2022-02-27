@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="ion-no-padding" >
       <ion-toolbar class="searchbar" v-if="profileCompleted < 10">
         <img
           @click="router.push('/editprofile')"
@@ -291,19 +291,20 @@ ion-searchbar {
   padding-right: 0px;
 }
 .progress {
-  position: fixed;
-  top: 62px;
+  position: absolute;
+  top: 122px;
   left: 17px;
   width: 180px;
 }
 .profile-banner {
+  position: relative;
   width: 400px;
   height: 68px;
-  margin-top: 10px;
+  margin-top: 70px;
 }
 .profile-completed {
-  position: fixed;
-  top: 39px;
+  position: absolute;
+  top: 99px;
   left: 17px;
   z-index: 1;
   font-style: normal;

@@ -227,6 +227,8 @@ export default {
 .sent-receive-icon {
   width: 8px;
   height: 10px;
+  margin-left: 6px;
+  margin-bottom: -1px;
 }
 .unlink {
   width: 20px;

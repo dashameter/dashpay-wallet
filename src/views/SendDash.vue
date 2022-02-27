@@ -17,9 +17,9 @@
         </div>
       </div>
 
-      <div class="transaction" @click="switchSendRequest">
+      <div class="transaction">
         <MySelf
-          :sendRequestDirection="sendRequestDirection"
+          :sendRequestDirection="'send'"
           :newDashBalance="newDashBalance"
         ></MySelf>
       </div>
@@ -57,7 +57,7 @@
       </div>
 
       <div class="message-text">Recipient Dash Address</div>
-      <ion-textarea class="message-input" v-model="recipient"></ion-textarea>
+      <textarea class="message-input" v-model="recipient" rows="2"></textarea>
     </ion-content>
 
     <ion-footer class="ion-no-border">
@@ -97,7 +97,7 @@ import {
   IonFooter,
   IonContent,
   IonIcon,
-  IonTextarea,
+  // IonTextarea,
   IonChip,
   modalController,
 } from "@ionic/vue";
@@ -121,7 +121,7 @@ export default defineComponent({
     IonPage,
     IonContent,
     IonIcon,
-    IonTextarea,
+    // IonTextarea,
     IonChip,
     // IonToast,
     DashCurrency,
@@ -253,6 +253,20 @@ export default defineComponent({
   margin-left: -10px;
   background-color: linear-gradient(266.73deg, #f2f8fd 0%, #ebfff8 98.09%);
 }
+
+ion-item::part(native) {
+  background: linear-gradient(
+    266.51deg,
+    #f3f3ff 0%,
+    #e9f0ff 100%,
+    #e9f0ff 100%
+  );
+  margin: 25px 0px 0px 10px;
+  border-radius: 10px;
+  width: 328px;
+}
+
+
 .title {
   position: fixed;
   left: 50%;
@@ -267,7 +281,6 @@ export default defineComponent({
   align-items: center;
 }
 .header-icon {
-  /* order: 0; */
   width: 28px;
   height: 28px;
   display: flex;
@@ -276,10 +289,10 @@ export default defineComponent({
 }
 .swap-container {
   position: relative;
-  margin-top: 36px;
+  margin-top: 70px;
 }
 .message-text {
-  margin: 13px 0px 8px 0px;
+  margin: 65px 0px 8px 0px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -297,6 +310,9 @@ export default defineComponent({
   border: 0.5px solid rgba(0, 0, 0, 0.12);
   /* box-sizing: border-box; */
   border-radius: 10px;
+  min-width: 332px;
+  font-size: 16px; 
+  padding: 8px;
 }
 .swap {
   width: 35px;
@@ -306,4 +322,13 @@ export default defineComponent({
   right: 14px;
   transform: translate(0%, -50%);
 }
+
+textarea .native-textarea .sc-ion-textarea-md-h {
+  min-width: 328px;
+  --padding-top: 10px;
+  --padding-end: 10px;
+  --padding-bottom: 11px;
+  --padding-start: 8px;
+}
+
 </style>

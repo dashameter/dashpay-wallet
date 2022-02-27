@@ -74,7 +74,7 @@ export default {
     const openQRCodeModal = async () => {
       const modal = await modalController.create({
         component: ShowQRCode,
-        cssClass: "qrcode",
+        cssClass: "viewrequest",
       });
       popoverController.dismiss();
       return modal.present();

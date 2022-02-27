@@ -28,9 +28,8 @@
             v-if="chatListItem.direction === 'RECEIVED'"
             :src="require('/public/assets/icons/receiveDash.svg')"
           />
-          <!-- v-if="chatListItem.direction === 'SENT'" -->
           <ion-icon
-            v-else
+          v-if="chatListItem.direction === 'SENT'"
             class="sentReceiveIcon"
             :src="require('/public/assets/icons/sendDash.svg')"
           />

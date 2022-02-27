@@ -34,7 +34,7 @@
           </ion-input>
         </ion-item>
         <ion-list>
-          <ion-item class="char" lines="none" style="margin: 0px">
+          <ion-item class="char" lines="none">
             <ion-icon
               slot="start"
               :icon="nameConstraintIcons.isThreeCharsLong"
@@ -358,13 +358,14 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-/* .back {
+.back {
   margin-left: 16px;
   width: 22px;
   height: 22px;
   color: #6c69fc;
-} */
+}
 :host {
   --min-height: 0px;
   --background: white;
@@ -386,19 +387,17 @@ ion-spinner {
   text-align: center;
 }
 .char {
-  /* font-family: Inter; */
+  height: 30px;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
-  line-height: 15px;
+  line-height: 22px;
   color: #68717b;
   margin: 0;
 }
 ion-icon {
   font-size: 12px;
-}
-item-native {
-  padding-inline-start: 0px;
+  margin: 9px 9px 9px 0px;
 }
 ion-input {
   --padding-start: 12px; /* did not work, so used css class below */

@@ -21,36 +21,21 @@
     <meta name="apple-mobile-web-app-title" content="DashPay" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="referrer" content="no-referrer" />
+
+    <link rel="stylesheet" href="/assets/devices.min.css" type="text/css" />
+
     <style>
       /* @media screen and (min-device-width: 360px) { */
       .desktop {
-        position: relative;
         display: flex;
-        margin: auto;
+        margin: 50px auto;
         width: 360px;
         height: 640px;
-        border-radius: 25px;
-        overflow-x: hidden;
-        transform-origin: left bottom;
-        will-change: transform;
-        border: 16px black solid;
-        border-top-width: 60px;
-        border-bottom-width: 60px;
       }
-      /* simulate line at the top of the smartphone */
-      /* .smartphone:before {
-        display: block;
-        width: 60px;
-        height: 5px;
-        position: absolute;
-        top: -30px;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #333;
-        background: white;
-        border-radius: 10px;
-      } */
-      /* } */
+      .phone {
+        width: 360px;
+        height: 640px;
+      }
     </style>
     <script>
       if (window.location.href === "http://dashpay.dashevo.io/app.html")
@@ -61,6 +46,21 @@
   </head>
 
   <body>
-    <iframe class="desktop" src="/index.html"> </iframe>
+    <div class="desktop">
+    <div class="marvel-device note8">
+    <div class="inner"></div>
+    <div class="overflow">
+        <div class="shadow"></div>
+    </div>
+    <div class="speaker"></div>
+    <div class="sensors"></div>
+    <div class="more-sensors"></div>
+    <div class="sleep"></div>
+    <div class="volume"></div>
+    <div class="camera"></div>
+    <div class="screen">
+      <iframe class="phone" src="/index.html"> </iframe>
+    </div>
+    </div>
   </body>
 </html>

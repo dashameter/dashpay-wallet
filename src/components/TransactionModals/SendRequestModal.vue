@@ -113,13 +113,14 @@
     </div>
 
     <div class="message-text">Message</div>
-    <ion-textarea
+    <!-- <ion-textarea
       :autoGrow="true"
       rows="2"
       cols="50"
       class="message-input"
       v-model="message"
-    ></ion-textarea>
+    ></ion-textarea> -->
+    <ion-input class="message-input" v-model="message"></ion-input>
   </ion-content>
   <ion-footer class="ion-no-border">
     <!-- TODO disable button if the balance is too low -->
@@ -163,7 +164,8 @@ import {
   IonContent,
   IonIcon,
   IonFooter,
-  IonTextarea,
+  // IonTextarea,
+  IonInput,
   IonChip,
   modalController,
 } from "@ionic/vue";
@@ -185,7 +187,8 @@ export default defineComponent({
     IonContent,
     IonIcon,
     IonFooter,
-    IonTextarea,
+    // IonTextarea,
+    IonInput,
     MySelf,
     MyFriend,
     DashCurrency,
@@ -238,12 +241,13 @@ export default defineComponent({
       console.log("show currency", currency.value);
     };
 
+const fiatValue = ref()
     watchEffect(() => {
       if (currency.value === "dash") {
-        return (fiatAmount.value = amount.value * fiatRate.value);
+        return (fiatAmount.value = parseFloat((amount.value * fiatRate.value).toFixed(2)));
       }
       if (currency.value === "fiat") {
-        return (amount.value = fiatAmount.value / fiatRate.value);
+        return (amount.value = parseFloat((fiatAmount.value / fiatRate.value).toFixed(6)));
       }
     });
 
@@ -252,10 +256,8 @@ export default defineComponent({
       const balance = ref(0);
       if (sendRequestDirection.value === "send") {
         balance.value = myBalance.value - dashInDuffs.value(amount.value);
-        // console.log("balance", balance.value);
       } else if (sendRequestDirection.value === "request") {
         balance.value = myBalance.value + dashInDuffs.value(amount.value);
-        // console.log("balance", balance.value);
       }
       return duffsInDash.value(balance.value);
     });
@@ -382,7 +384,6 @@ ion-item {
   background: #f5f5f7;
 
   border: 0.5px solid rgba(0, 0, 0, 0.12);
-  /* box-sizing: border-box; */
   border-radius: 10px;
 }
 .input-format {
@@ -403,7 +404,6 @@ ion-item {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* padding: 13px 148px; */
 
   width: 328px;
   height: 44px;
@@ -418,7 +418,6 @@ ion-item {
 }
 
 .funds {
-  /* width: 210px; */
   height: 15px;
   margin: 10px auto 0px auto;
   display: flex;

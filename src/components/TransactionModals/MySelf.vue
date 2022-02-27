@@ -1,5 +1,5 @@
 <template>
-  <ion-item lines="none">
+  <ion-item lines="none" part="native">
     <ion-avatar slot="start">
       <img :src="myAvatar" />
     </ion-avatar>

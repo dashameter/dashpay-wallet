@@ -2,13 +2,14 @@
   <div class="flex ion-nowrap wrapper">
     <ion-input
       ref="focus"
-      class="enter-dash"
+      class="enter-dash dash-width"
       v-on:input="$emit('update:amount', $event.target.value)"
       :value="amount"
-      type="text"
+      type="number"
       min="0"
-      maxlength="6"
-      placeholder="0"
+      maxlength="9"
+      placeholder="0.000"
+      autofocus="true"
     ></ion-input>
     <ion-label class="dash-label"> Dash</ion-label>
   </div>
@@ -59,7 +60,7 @@ export default defineComponent({
         (focus.value as any).$el.setFocus();
       }, 1000);
     });
-
+    
     const fiatRate = ref(getFiatRate.value(props.fiatSymbol).price);
     console.log("fiatRate.value :>> ", fiatRate.value);
 
@@ -93,4 +94,31 @@ export default defineComponent({
   order: 1;
   margin-left: 2px;
 }
+.input-wrap {
+  position: relative;
+  margin: auto;
+  width: 250px;
+}
+
+/* remove the increment buttons from the ion-input field */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+margin: 0;
+opacity: 1;
+}
+
+/* firefox */
+/* input[type=number] {
+  -moz-appearance: textfield !important;
+} */
+
+/* this style deactivates the focus on the input field */
+/* ion-input {
+  --placeholder-font-weight: 500;
+  --placeholder-color: black; 
+  --placeholder-opacity: 0.7;
+} */
 </style>

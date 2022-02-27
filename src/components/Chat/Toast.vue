@@ -1,6 +1,7 @@
 <template>
   <ion-toast
     :css-class="store.state.toast.type"
+    part="message button"
     position="top"
     :buttons="showButton()"
     :is-open="store.state.toast.isOpen"
@@ -41,7 +42,7 @@ export default defineComponent({
           {
             side: "start",
             icon: copy,
-            // cssClass: "iconPosition",
+            cssClass: "copiedtoast",
           },
         ];
       } else if (store.state.toast.icon === "transactionIcon") {
@@ -49,7 +50,6 @@ export default defineComponent({
           {
             side: "start",
             icon: checkmarkCircleOutline,
-            // cssClass: "iconPosition",
           },
         ];
       }
@@ -83,17 +83,17 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   text-align: center;
+  margin: auto;
   height: 70px;
 }
-.iconPosition {
-  margin-left: 100px;
-  padding-left: 100px;
+
+ion-toast::part(message) {
+  margin-left: -22px;
 }
-.toast-button-icon-only {
-  margin-left: 100px;
-  padding-left: 100px;
-  order: 0;
-}
+/* ion-toast::part(button) {
+  margin-left: calc(50% - 10px);
+} */
+
 .transactiontoast {
   --background: linear-gradient(
     266.51deg,

@@ -263,8 +263,8 @@ export default {
 }
 .qrcode .modal-wrapper {
   position: fixed;
-  top: 35%;
-  --height: 65%;
+  top: 47%;
+  --height: 53%;
   --border-radius: 10px 10px 0px 0px;
   /* --box-shadow: 0px -0.5px 2px 1px rgba(0, 0, 0, 0.1); */
 }

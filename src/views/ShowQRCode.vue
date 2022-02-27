@@ -93,21 +93,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.copyicon {
-  color: #6c69fc;
-  margin-left: 8px;
-  margin-top: 8px;
-}
 .label {
   margin-top: 33px;
 }
 .align {
   margin-top: 14px;
-}
-.center {
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0%);
 }
 .middle {
   position: fixed;

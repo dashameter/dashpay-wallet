@@ -48,6 +48,8 @@
         >
       </ion-toolbar>
     </ion-footer>
+    <ion-loading :is-open="showLoader" :message="'Initializing Wallet'">
+    </ion-loading>
   </ion-page>
 </template>
 
@@ -63,6 +65,7 @@ import {
   IonItem,
   IonFooter,
   IonIcon,
+  IonLoading,
   modalController,
 } from "@ionic/vue";
 
@@ -96,6 +99,7 @@ export default {
     IonItem,
     IonIcon,
     IonAvatar,
+    IonLoading,
   },
   setup() {
     const router = useRouter();
@@ -207,7 +211,7 @@ export default {
 }
 ion-input {
   --padding-start: 12px; /* did not work, so used css class below */
-  --width: 350px;
+  /* --width: 400px; */
   height: 45px;
   --background: #f5f5f7;
   border: 0.5px solid rgba(0, 0, 0, 0.12);
@@ -217,7 +221,7 @@ ion-input {
 ion-item.sc-ion-input-md-h:not(.item-label),
 ion-item:not(.item-label) .sc-ion-input-md-h {
   --padding-start: 12px;
-  --width: 328px;
+  width: 296px;
 }
 .lock {
   position: absolute;

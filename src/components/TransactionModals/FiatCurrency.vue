@@ -2,15 +2,14 @@
   <div class="flex ion-nowrap wrapper">
     <ion-input
       ref="focus"
-      class="enter-dash"
+      class="enter-dash fiat-width"
       v-on:input="$emit('update:fiatAmount', $event.target.value)"
-      type="text"
+      type="number"
       min="0"
-      maxlength="2"
       :value="fiatAmount"
       placeholder="0.00"
     ></ion-input>
-    <ion-label class="dash-label" style="width: 160px">
+    <ion-label class="dash-label">
       {{ fiatSymbol }}
       <ion-icon
         :icon="chevronDownOutline"
