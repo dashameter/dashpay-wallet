@@ -2313,12 +2313,12 @@ export default {
         }
 
         if (this.mnemonic.filter((w) => whitelist.includes(w)).length === 12) {
+          setTimeout(() => {
           this.$emit("mnemonicEntered", this.mnemonic.join(" "));
+          }, 250);
+          setTimeout(() => {
           this.mnemonic = [""];
-          // setTimeout(() => {
-          //   this.suggestions = [];
-          //   alert(this.mnemonic.join(" "));
-          // }, 100);
+          }, 1000);
         }
       });
     },

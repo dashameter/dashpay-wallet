@@ -92,6 +92,8 @@ import { arrowBack } from "ionicons/icons";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const decrypt = require("@dashevo/wallet-lib/src/types/Account/methods/decrypt");
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default {
   name: "ChooseAccount",
   components: {
@@ -142,7 +144,7 @@ export default {
 
       // TODO remove evil logging for production
       LogRocket.identify(account.id, {
-        label: account.accountDPNS.label,
+        label: account.accountDPNS?.label,
         accountDPNS: store.state.accountDPNS,
       });
 
@@ -225,6 +227,7 @@ export default {
 
     const decryptMnemonic = async function() {
       showLoader.value = true;
+      await sleep(250); // Don't block viewport with the decrypt function
       const mnemonic = decrypt(
         "aes",
         selectedAccount.value.encMnemonic,

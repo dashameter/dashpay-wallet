@@ -71,9 +71,8 @@ import {
 
 import {
   getClient,
-  disconnectClient,
-  getClientOpts,
-  initClient,
+  clientHasWallet,
+  initClientWithNewMnemonic,
 } from "@/lib/DashClient";
 
 import { useRouter } from "vue-router";
@@ -124,17 +123,12 @@ export default {
 
     const checkPassword = async () => {
       showLoader.value = true;
+
       console.log("store.state.wishName :>> ", store.state.wishName);
       console.log("formPassword.value :>> ", formPassword.value);
+      console.log("hasWallet", getClient().wallet);
 
-      try {
-        await disconnectClient();
-      } catch (e) {
-        console.log(e);
-      }
-      const clientOpts = getClientOpts(null);
-
-      await initClient(clientOpts);
+      if (!clientHasWallet()) await initClientWithNewMnemonic();
 
       console.log(
         "getClient().wallet!.exportWallet() :>> ",

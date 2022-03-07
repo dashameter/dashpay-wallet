@@ -104,7 +104,7 @@
 
       <sharedFriends
         v-if="tabSelected === 'sharedFriends'"
-        :filteredUserFriends="filteredUserFriends"
+        :sharedFriends="sharedFriends"
         style="margin-top: 430px; z-index: 1"
       ></sharedFriends>
     </ion-content>
@@ -133,19 +133,11 @@ import {
   modalController,
 } from "@ionic/vue";
 
-import { getClient, getClientIdentity } from "@/lib/DashClient";
-
-// import {} from "ionicons/icons";
-
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import useChats from "@/composables/chats";
 import ContactQRCodeModal from "@/components/Contact/ContactQRCodeModal.vue";
 import { people } from "ionicons/icons";
 import { onMounted } from "vue";
-// import { Client } from "dash/dist/src/SDK/Client/index";
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default {
   name: "ContactProfile",
@@ -226,7 +218,7 @@ export default {
         componentProps: {
           label: getUserLabel.value(friendOwnerId.value)?.toLowerCase(),
         },
-        cssClass: "qrcode", 
+        cssClass: "qrcode",
       });
       return modal.present();
     };
@@ -256,7 +248,30 @@ export default {
       }
     });
 
-    const formatDate = function (date: Date) {
+    const sharedFriends = computed(() => {
+      // if (filterInput.value) {
+      //   console.log("returning filtered list, filterInput", filterInput);
+      //   console.log(
+      //     "fields,",
+      //     store.getters.getUserFriends(friendOwnerId.value)
+      //   );
+      //   // return [store.state.chatList[0]];
+      //   return search(
+      //     store.getters.getUserFriends(friendOwnerId.value),
+      //     ["_searchLabel", "_searchDisplayName"],
+      //     filterInput.value
+      //   );
+      // } else {
+      //   console.log("returning entire list, filterInput", filterInput);
+      //   console.log(
+      //     "fields,",
+      //     store.getters.getUserFriends(friendOwnerId.value)
+      //   );
+      return store.getters.getSharedFriends(friendOwnerId.value);
+      // }
+    });
+
+    const formatDate = function(date: Date) {
       const month = [
         "Jan",
         "Feb",
@@ -289,6 +304,7 @@ export default {
     return {
       friendsDate,
       filteredUserFriends,
+      sharedFriends,
       filterInput,
       openQRCodeModal,
       friendOwnerId,

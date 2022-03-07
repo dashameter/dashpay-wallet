@@ -112,6 +112,7 @@ const initClient = async function(clientOpts: any) {
       Math.floor((startFetchIdentity - startWalletInit) / 1000),
       "s"
     );
+    console.log("Wallet init balance", client.account!.getTotalBalance());
 
     console.log("client, fetch identity");
 
@@ -134,6 +135,21 @@ const getClientIdentity = function() {
   return identity;
 };
 
+const clientHasWallet = function() {
+  return !!getClient().wallet;
+};
+
+const initClientWithNewMnemonic = async function() {
+  try {
+    await disconnectClient();
+  } catch (e) {
+    console.log(e);
+  }
+  const clientOpts = getClientOpts(null);
+
+  await initClient(clientOpts);
+};
+
 export {
   initClient,
   getClient,
@@ -142,4 +158,6 @@ export {
   setClientIdentity,
   getClientIdentity,
   disconnectClient,
+  clientHasWallet,
+  initClientWithNewMnemonic,
 };

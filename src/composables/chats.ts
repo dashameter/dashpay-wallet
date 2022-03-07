@@ -62,6 +62,10 @@ export default function useChats() {
     isRefreshLoopActive = false;
   }
 
+  function contactRequestExistsFor(friendOwnerId: any) {
+    return !!store.getters.getSentContactRequest(friendOwnerId);
+  }
+
   const sendChat = async (
     chatText: string,
     friendOwnerId: string,
@@ -116,12 +120,15 @@ export default function useChats() {
     let documentBatchToSend;
 
     // Attach contact request if we haven't sent one before
-    if (!store.getters.getSentContactRequest(friendOwnerId)) {
+    if (!contactRequestExistsFor(friendOwnerId)) {
       const contactRequest = await createContactRequest(
         client,
         getClientIdentity(),
         friendOwnerId
       );
+
+      if (contactRequest.toJSON().$ownerId == contactRequest.toJSON.toUserId)
+        debugger;
 
       documentBatchToSend = {
         create: [document, contactRequest],
@@ -152,7 +159,10 @@ export default function useChats() {
           ...result.transitions[1],
           ownerId: result.ownerId,
         };
-        console.log("newContactRequestSent :>> ", newContactRequestSent);
+        console.log(
+          "newContactRequestSent :>> ",
+          newContactRequestSent.toJSON()
+        );
         store.commit("setContactRequestSent", newContactRequestSent);
       }
 
@@ -165,7 +175,7 @@ export default function useChats() {
 
       store.commit("setChatMsgs", [chatSent]);
     } catch (e) {
-      // Catch duplicate contactRequest error and only broadcast chatMsg
+      // Catch duplicate contactRequesterror and only broadcast chatMsg
       if (e.data.errors[0].name === "DuplicateDocumentError") {
         try {
           result = await client.platform?.documents.broadcast(

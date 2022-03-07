@@ -6,6 +6,7 @@ unset VUE_APP_DAPIADDRESSES
 unset VUE_APP_DPNS_CONTRACT_ID
 
 export VUE_APP_ENV_RUN="build_testnet"
+export VUE_APP_AUTOFAUCET="http://autofaucet-1.dashevo.io:5050/drip/"
 
 node ./scripts/registerContracts.js
 

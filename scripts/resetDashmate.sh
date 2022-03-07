@@ -6,7 +6,7 @@
 
 # or
 #  ./scripts/lib/dashmate_temporary_reset_script.sh
-source ~/.evoenv
+. ~/.evoenv
 
 SCRIPT_DIR=$(pwd)
 echo $SCRIPT_DIR
@@ -26,8 +26,8 @@ echo "Remove dashmate configuration..."
 sudo rm -rf ~/.dashmate/
 
 #####################
-yarn run setup
-
+#yarn run setup
+yarn run dashmate setup local
 
 # chmod -R 777 ~/.dashmate
  

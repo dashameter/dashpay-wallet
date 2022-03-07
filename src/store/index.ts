@@ -265,6 +265,10 @@ const mutations = {
   },
   setSocialGraphSent(state: any, contactRequest: any) {
     if (!contactRequest) return;
+    console.log(
+      "setSocialGraphSent contactRequest.toJSON() :>> ",
+      contactRequest.toJSON()
+    );
 
     const ownerId = contactRequest.ownerId.toString();
 
@@ -760,9 +764,27 @@ const getters = {
         ).length > 0
       );
   },
+  getSharedFriends: (state: any, getters: any) => (friendOwnerId: string) => {
+    function toUserIdOf(contact: any) {
+      return contact.data.toUserId;
+    }
+
+    const userFriends = getters.getUserFriends(friendOwnerId);
+
+    const myFriends = getters.getMyFriends;
+
+    const myFriendsIds = myFriends.map((contact: any) => toUserIdOf(contact));
+
+    const sharedFriends = userFriends.filter((contact: any) =>
+      myFriendsIds.includes(toUserIdOf(contact))
+    );
+
+    return sharedFriends;
+  },
   getUserFriends: (state: any) => (friendOwnerId: string) => {
     const getSocialMetrics = (findOwnerId: string) => {
       const sentByOwnerId = state.socialGraph.sentByOwnerId;
+      console.log("sentByOwnerId :>> ", sentByOwnerId);
 
       let count = 0;
       let isMyFriend = false;
@@ -785,7 +807,7 @@ const getters = {
       //   state.contactRequests.sent
       // );
 
-      if (count > 0) count = count - 1;
+      if (count > 0) count = count - 1; // Don't count myself
 
       return { count, isMyFriend };
     };

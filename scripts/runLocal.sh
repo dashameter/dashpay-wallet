@@ -5,6 +5,8 @@ export VUE_APP_ENV_RUN="local"
 
 export VUE_APP_USERMNEMONIC='access glad stomach deal tray entire mean grunt boy shoot want shrimp'
 
+export VUE_APP_AUTOFAUCET="http://localhost:5050/drip/"
+
 node ./scripts/registerContracts.js
 
 source ./env/datacontracts_$VUE_APP_ENV_RUN.env
