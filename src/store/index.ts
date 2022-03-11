@@ -418,6 +418,44 @@ const actions = {
 
     context.commit("setChatMsgs", msg);
   },
+  async resolveUserFeatures(context: any, { ownerId = "" }) {
+    console.log("resolveUserFeatures", ownerId);
+    if (!ownerId)
+      throw new Error("resolveUserFeatures Error: No ownerId given");
+
+    const client = getClient();
+
+    async function resolveChatAndRequests() {
+      const [result] = await client?.platform?.documents.get(
+        "dashpayWallet.chat",
+        {
+          where: [["$ownerId", "==", ownerId.toString()]],
+          limit: 1,
+        }
+      );
+
+      return !!result;
+    }
+
+    const features = { chatAndRequests: false };
+
+    features.chatAndRequests = await resolveChatAndRequests();
+
+    console.log("resolveUserFeatures features :>> ", features);
+
+    // if (result) {
+    //   context.commit("setDashpayProfiles", results);
+    //   context.commit("sortChatList"); // TODO optimize performance
+    // }
+    const dpnsDoc = {
+      ...context.state.dpns[ownerId],
+      _features: features,
+    };
+
+    context.commit("setDPNS", dpnsDoc);
+
+    return features;
+  },
   async fetchDashpayProfiles(
     context: any,
     { ownerIds = [], forceRefresh = false }
@@ -430,6 +468,7 @@ const actions = {
       ? ownerIds
       : ownerIds
           // Filter out ownerIds with already cached profiles
+          // TODO optimize refreshing profils once they are permanently cached
           .filter(
             (ownerId: any) =>
               !(ownerId.toString() in context.state.dashpayProfiles)
@@ -450,9 +489,10 @@ const actions = {
     if (results.length > 0) {
       context.commit("setDashpayProfiles", results);
       context.commit("sortChatList"); // TODO optimize performance
+      context.dispath("resolveContactCapibilities");
     }
 
-    return results; // TODO returned cached entries as well
+    return results; // TODO return cached entries as well
   },
   async syncChats(context: any) {
     const myOwnerId = context.state.accountDPNS?.$ownerId;
@@ -644,19 +684,28 @@ const actions = {
       context.commit("sortChatList");
   },
   async fetchDPNSDoc(context: any, ownerId: string) {
-    // If dpnsDoc is already cached, don't hit DAPI again
-    if (context.state.dpns[ownerId]) return;
+    // If dpnsDoc is already cached, just resolve the features as they might change
+    if (context.state.dpns[ownerId]) {
+      await context.dispatch("resolveUserFeatures", {
+        ownerId,
+      });
+      return;
+    }
 
     const client = getClient();
     const [dpnsDoc] = await client?.platform?.names.resolveByRecord(
       "dashUniqueIdentityId",
       ownerId
     );
-    // console.log("fetchDPNSDoc dpnsDoc :>> ", dpnsDoc);
+
+    console.log("resolve fetchDPNSDoc dpnsDoc :>> ", dpnsDoc);
 
     if (dpnsDoc) {
       context.commit("setDPNS", dpnsDoc);
-      context.commit("sortChatList"); // TODO increase performance
+      await context.dispatch("resolveUserFeatures", {
+        ownerId,
+      });
+      // context.commit("sortChatList"); // TODO increase performance
     }
   },
 };
@@ -689,6 +738,9 @@ const getters = {
   },
   getUserLabel: (state: any) => (ownerId: string) => {
     return (state.dpns as any)[ownerId]?.data.label ?? ownerId.substr(0, 6);
+  },
+  getUserFeatures: (state: any) => (ownerId: string) => {
+    return (state.dpns as any)[ownerId]?._features ?? {};
   },
   getUserDisplayName: (state: any) => (ownerId: string) => {
     return (

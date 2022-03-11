@@ -1,14 +1,16 @@
 <template>
   <ion-item :account="account" class="ion-no-padding" button>
     <ion-avatar slot="start">
-      <img :src="getUserAvatar(account.accountDPNS?.$ownerId)" />
+      <img
+        :src="getUserAvatar(account.accountDPNS?.$ownerId)"
+        :class="{ animate: areProfilesLoading }"
+      />
     </ion-avatar>
     <ion-label class="ion-nowrap">
       <div style="position: relative">
         <ion-icon
           v-if="loggedInAccount"
           :src="require('/public/assets/icons/account.svg')"
-          class="active"
         ></ion-icon>
         <h2 class="accountname">
           {{ accountLabel }}
@@ -33,7 +35,7 @@ import useContacts from "@/composables/contacts";
 
 export default {
   name: "AccountItem",
-  props: ["account"],
+  props: ["account", "areProfilesLoading"],
   components: {
     IonLabel,
     IonItem,
@@ -102,5 +104,18 @@ export default {
   top: 50%;
   right: 0px;
   transform: translate(0%, -50%);
+}
+.animate {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(to right, #cacaca 4%, #e2e2e2 25%, #eff1f3 36%);
+  background-size: 400px 100%;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
 }
 </style>

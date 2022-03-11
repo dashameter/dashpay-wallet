@@ -106,9 +106,9 @@ export default {
 
         registrationMessage.value = "Many Duffs make a Dash";
 
-        const [identityId] = await (
-          client.account as any
-        ).identities.getIdentityIds();
+        const [
+          identityId,
+        ] = await (client.account as any).identities.getIdentityIds();
 
         console.log("existing identityId :>> ", identityId);
 
@@ -120,6 +120,8 @@ export default {
           registrationMessage.value = "Creating new identity";
 
           identity = await client.platform?.identities.register();
+
+          identity = await client.platform?.identities.get(identity.getId()); // TODO remove this line once identities.register returns correct identity.balance
 
           setClientIdentity(identity);
         }

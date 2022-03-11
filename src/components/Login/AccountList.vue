@@ -11,6 +11,7 @@
       v-for="account in accounts"
       :key="account.encMnemonic"
       :account="account"
+      :areProfilesLoading="areProfilesLoading"
       @click="$emit('selectAccount', account)"
     />
     <!-- </ion-modal> -->
@@ -48,6 +49,8 @@ export default {
 
     const accounts = ref([]);
 
+    const areProfilesLoading = ref(true);
+
     const store = useStore();
 
     const refreshAccountList = async () => {
@@ -68,6 +71,7 @@ export default {
         ownerIds,
         forceRefresh: true,
       });
+      areProfilesLoading.value = false;
     };
 
     onMounted(async () => {
@@ -89,6 +93,7 @@ export default {
       accounts,
       isAccountItemOpen,
       showAccountItem,
+      areProfilesLoading,
     };
   },
 };

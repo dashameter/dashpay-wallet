@@ -80,8 +80,9 @@ export default function useChats() {
 
     const duffs = dashInDuffs.value(amount);
 
+    // don't send L1 transaction on request 'open' | 'decline'
     let txId = "";
-    if (duffs > 0)
+    if (duffs > 0 && ["", "accept"].includes(request))
       txId = await sendDashToContactRequest(
         getClient(),
         store.getters.getReceivedContactRequest(friendOwnerId),

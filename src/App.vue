@@ -29,13 +29,13 @@ export default defineComponent({
     const store = useStore();
 
     onErrorCaptured((error: any) => {
-      console.error(error);
+      console.error("onErrorCaptured", error);
       store.dispatch("showToast", { text: error, color: "danger" });
       return false;
     });
 
-    window.onerror = function (msg, src, linenum, colnum, error) {
-      console.error(error);
+    window.onerror = function(msg, src, linenum, colnum, error) {
+      console.error("window.onerror", error);
       store.dispatch("showToast", { text: `${msg} ${error}`, color: "danger" });
       return false;
     };

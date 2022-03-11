@@ -4,9 +4,10 @@
       <ion-toolbar>
         <HomeHeader></HomeHeader>
       </ion-toolbar>
+      <topup-alert />
     </ion-header>
 
-    <ion-content :fullscreen="true" class="ion-no-padding" >
+    <ion-content :fullscreen="true" class="ion-no-padding">
       <ion-toolbar class="searchbar" v-if="profileCompleted < 10">
         <img
           @click="router.push('/editprofile')"
@@ -147,6 +148,7 @@ import useWallet from "@/composables/wallet";
 import useContacts from "@/composables/contacts";
 import useChats from "@/composables/chats";
 import useRates from "@/composables/rates";
+import TopupAlert from "@/components/Home/TopupAlert.vue";
 // import SendDash from "@/views/SendDash.vue";
 
 // import {
@@ -173,6 +175,7 @@ export default {
     IonIcon,
     HomeHeader,
     ChatList,
+    TopupAlert,
     // SendDash,
   },
   setup() {

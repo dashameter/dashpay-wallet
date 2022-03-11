@@ -43,6 +43,7 @@
         <ion-chip
           expand="block"
           class="nextbutton next-color"
+          :disabled="isNextClicked"
           @click="checkPassword()"
           ><span class="next-text">Next</span></ion-chip
         >
@@ -111,6 +112,8 @@ export default {
 
     const checkMessage = ref("");
 
+    const isNextClicked = ref(false);
+
     const { getUserLabel, getUserAvatar } = store.getters;
 
     const showLoader = ref(false);
@@ -123,6 +126,7 @@ export default {
 
     const checkPassword = async () => {
       showLoader.value = true;
+      isNextClicked.value = true;
 
       console.log("store.state.wishName :>> ", store.state.wishName);
       console.log("formPassword.value :>> ", formPassword.value);
@@ -188,6 +192,7 @@ export default {
       getUserAvatar,
       formPassword,
       checkPassword,
+      isNextClicked,
       checkMessage,
       closeOutline,
       cancel,

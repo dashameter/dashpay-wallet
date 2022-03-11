@@ -6,6 +6,12 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding-start ion-padding-end">
+      <p
+        v-if="!getUserFeatures(friendOwnerId).chatAndRequests && !hasSentMeAMsg"
+      >
+        This user has not sent any chat msgs yet. Share this App with him and he
+        will see the messages once he upgrades his wallet.
+      </p>
       <ChatBubbles
         :chatMsgs="getChatMsgs(friendOwnerId)"
         :friendOwnerId="friendOwnerId"
@@ -96,6 +102,8 @@ export default {
 
     const friendOwnerId = ref(route.params.friendOwnerId as string);
 
+    store.dispatch("fetchDPNSDoc", friendOwnerId.value);
+
     const {
       getChatMsgs,
       sendChat,
@@ -110,6 +118,7 @@ export default {
       () => {
         if (route.params.friendOwnerId) {
           friendOwnerId.value = route.params.friendOwnerId as string;
+          console.log("watching");
 
           // Resolve friend if still unknown
           store.dispatch("fetchDPNSDoc", friendOwnerId.value);
@@ -122,12 +131,12 @@ export default {
 
     // Mark msgs as read
     watchEffect(() => {
-      console.log("watcheffect friendOwnerId.value :>> ", friendOwnerId.value);
-      console.log(
-        "watcheffect store.getters.getChatMsgs(friendOwnerId.value) length :>> ",
-        store.getters.getChatMsgs(friendOwnerId.value).length,
-        store.getters.getChatMsgs(friendOwnerId.value)
-      );
+      // console.log("watcheffect friendOwnerId.value :>> ", friendOwnerId.value);
+      // console.log(
+      //   "watcheffect store.getters.getChatMsgs(friendOwnerId.value) length :>> ",
+      //   store.getters.getChatMsgs(friendOwnerId.value).length,
+      //   store.getters.getChatMsgs(friendOwnerId.value)
+      // );
       if (!(store.getters.getChatMsgs(friendOwnerId.value).length > 0)) return;
 
       const getLastMsgTimestamp = (msgs: any[]) => {
@@ -212,6 +221,13 @@ export default {
       sendChatWrapper(event.message, event.amount, request); // TODO add replyToChatId for requests
     };
 
+    const hasSentMeAMsg = computed(
+      () =>
+        getChatMsgs
+          .value(friendOwnerId.value)
+          .filter((msg: any) => msg._direction === "RECEIVED").length > 0
+    );
+
     return {
       chatText,
       sendChatWrapper,
@@ -227,6 +243,8 @@ export default {
       sendRequestDirection,
       sentContactRequest,
       receivedContactRequest,
+      getUserFeatures: computed(() => store.getters.getUserFeatures),
+      hasSentMeAMsg,
     };
   },
 };

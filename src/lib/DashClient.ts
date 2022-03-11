@@ -72,17 +72,17 @@ const setClientIdentity = function(newIdentity: any): void {
 };
 
 const fetchClientIdentity = async function() {
-  console.log("identity :>> ", identity);
-  if (identity) return identity;
+  console.log("fetchClientIdentity identity :>> ", identity);
+  // if (identity) return identity; // Deprecated, Always fetch, otherwise use getClientIdentity()
 
   identityId = (client?.account as any).identities.getIdentityIds()[0];
 
   // identityId = "Bxq3AxmzSaBPvr4kTc2W8ewDg8AZuNoVRYvTBssYpEP4"; // TODO TEMP this is a workaround for slow testnet
 
-  console.log("fetchClientIdentity identityId :>> ", identityId);
+  console.log("identityId :>> ", identityId);
 
   if (identityId) identity = await client?.platform?.identities.get(identityId);
-  console.log("identity :>> ", identity);
+  if (identity) console.log("identity.balance:>> ", identity.balance);
 
   return identity;
 };
