@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 import { useRouter } from "vue-router";
 import { IonIcon, IonLabel, IonButton, IonButtons } from "@ionic/vue";
 

@@ -15,7 +15,13 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/no-deprecated-slot-attribute': 'off',
+    'vue/multi-word-component-names': ['error', {
+      'ignores': ['Toast', 'Accept', 'Home', 'Conversation', 'Device', 'Settings', 'Welcome', 'friends']
+    }],
+    'no-unsafe-optional-chaining': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
   overrides: [
     {
