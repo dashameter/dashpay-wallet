@@ -49,6 +49,11 @@ try {
   );
 }
 
+const fundWallet = async (address) => {
+  const result = await axios.get(`http://127.0.0.1:5050/drip/${address}`);
+  console.log("faucet drip result :>> ", result.data);
+};
+
 const initWalletAndIdentity = async () => {
   if (!client) client = new Dash.Client(clientOpts);
 
@@ -65,11 +70,11 @@ const initWalletAndIdentity = async () => {
 
     console.log(`.. finished wallet sync in ${walletTime}s`);
 
-    console.log(
-      "\nReceiving address for wallet:\n",
-      client.account.getUnusedAddress().address,
-      "\n"
-    );
+    const walletAddress = client.account.getUnusedAddress().address;
+
+    console.log("\nReceiving address for wallet:\n", walletAddress, "\n");
+
+    await fundWallet(walletAddress);
   }
 
   await sleep(10000);
@@ -85,7 +90,7 @@ const initWalletAndIdentity = async () => {
 const registerContract = async (contractDocuments) => {
   const contract = await platform.contracts.create(contractDocuments, identity);
 
-  return platform.contracts.broadcast(contract, identity);
+  return platform.contracts.create(contract, identity);
 };
 
 (async () => {
@@ -127,45 +132,41 @@ const registerContract = async (contractDocuments) => {
     );
 
     const newRegisteredContractIds = newRegisteredContractIdsResults.map(
-      (id, idx) => {
-        if (typeof id === "string") {
-          return id;
-        } else {
-          const newId = id.dataContract.id.toString();
+      (contract, idx) => {
+        const newId = contract.id.toString();
 
-          const contractName = path.basename(
-            contractUrlswithHash[idx][0],
-            ".json"
-          );
+        const contractName = path.basename(
+          contractUrlswithHash[idx][0],
+          ".json"
+        );
 
-          console.log(
-            "Registered new contract: ",
-            `${contractName}_${envRun}`,
-            newId
-          );
+        console.log(
+          "Registered new contract: ",
+          `${contractName}_${envRun}`,
+          newId
+        );
 
-          if (contractName === "JEMBE_CONTRACT") {
-            try {
-              fs.appendFileSync(
-                `/home/${process.env.USER}/.evoenv`,
-                `\nexport VUE_APP_${contractName}_ID_${envRun}=${newId}\n`
-              );
+        if (contractName === "JEMBE_CONTRACT") {
+          try {
+            fs.appendFileSync(
+              `/home/${process.env.USER}/.evoenv`,
+              `\nexport VUE_APP_${contractName}_ID_${envRun}=${newId}\n`
+            );
 
-              console.log(
-                "-> Appended",
-                `${contractName}_${envRun}`,
-                "to ~/.evoenv"
-              );
-            } catch (e) {
-              console.log(e);
-              console.log(
-                `Add the ${contractName} to your environment variables manually to share it with other dApps..`
-              );
-            }
+            console.log(
+              "-> Appended",
+              `${contractName}_${envRun}`,
+              "to ~/.evoenv"
+            );
+          } catch (e) {
+            console.log(e);
+            console.log(
+              `Add the ${contractName} to your environment variables manually to share it with other dApps..`
+            );
           }
-
-          return newId;
         }
+
+        return newId;
       }
     );
 

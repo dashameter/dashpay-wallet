@@ -26,24 +26,29 @@ echo "Remove dashmate configuration..."
 sudo rm -rf ~/.dashmate/
 
 #####################
-#yarn run setup
-yarn run dashmate setup local
+yarn run setup
+#yarn run dashmate setup local
 
 # chmod -R 777 ~/.dashmate
  
 # Fund service account to register contracts
 # 'rival estate inside turn journey charge window rhythm marble audit amateur bus'
 yarn dashmate wallet:mint 10 --address=ySPRMNDVBhZVZvDS4wGn4Ujuq2wP4AcwLK --config=local_seed
+# yarn dashmate wallet:mint 10 --address=yd27TZKSapDDj89ctVg3J4RZb4znLNwcoa --config=local_seed
 
 # Fund testuser accounts
 # Bob 'proud group frequent erase retire approve produce race wealth picnic alert pear'
-yarn dashmate wallet:mint 10 --address=yR5sQ16UZ3Rpni9bqueF81bsHTkJdioSgN --config=local_seed
+# yarn dashmate wallet:mint 10 --address=yR5sQ16UZ3Rpni9bqueF81bsHTkJdioSgN --config=local_seed
 
 # HoneyBadger 'sphere ozone bachelor raise clutch mercy mansion cook teach eager sleep gadget'
-yarn dashmate wallet:mint 10 --address=yTQousskoh6e2rGvThtYktzbqXc5MYuATF --config=local_seed
+# yarn dashmate wallet:mint 10 --address=yTQousskoh6e2rGvThtYktzbqXc5MYuATF --config=local_seed
 
 # 'legend chase bless great skirt street member push calm real menu flee'
-yarn dashmate wallet:mint 10 --address=yUwkuzCY9U5aLTTaEenf7jnnRK9LmXAQ2o --config=local_seed
+# yarn dashmate wallet:mint 10 --address=yUwkuzCY9U5aLTTaEenf7jnnRK9LmXAQ2o --config=local_seed
+
+# Copy faucet privateKey over to dash-dapp-autofaucet
+cp ./packages/platform-test-suite/.env ../dash-dapp-autofaucet/
+
 
 # Start dashmate
 yarn dashmate group:start  --wait-for-readiness
