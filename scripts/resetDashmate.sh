@@ -33,7 +33,7 @@ yarn run setup
  
 # Fund service account to register contracts
 # 'rival estate inside turn journey charge window rhythm marble audit amateur bus'
-yarn dashmate wallet:mint 10 --address=ySPRMNDVBhZVZvDS4wGn4Ujuq2wP4AcwLK --config=local_seed
+# yarn dashmate wallet:mint 10 --address=ySPRMNDVBhZVZvDS4wGn4Ujuq2wP4AcwLK --config=local_seed
 # yarn dashmate wallet:mint 10 --address=yd27TZKSapDDj89ctVg3J4RZb4znLNwcoa --config=local_seed
 
 # Fund testuser accounts
@@ -47,6 +47,7 @@ yarn dashmate wallet:mint 10 --address=ySPRMNDVBhZVZvDS4wGn4Ujuq2wP4AcwLK --conf
 # yarn dashmate wallet:mint 10 --address=yUwkuzCY9U5aLTTaEenf7jnnRK9LmXAQ2o --config=local_seed
 
 # Copy faucet privateKey over to dash-dapp-autofaucet
+echo "Copying faucet privateKey .env over to ../dash-dapp-faucet/"
 cp ./packages/platform-test-suite/.env ../dash-dapp-autofaucet/
 
 

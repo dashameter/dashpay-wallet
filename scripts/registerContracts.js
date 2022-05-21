@@ -3,6 +3,7 @@ const path = require("path");
 const crypto = require("crypto");
 const fs = require("fs");
 const Dash = require("dash");
+const axios = require("axios");
 const glob = require("glob");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
